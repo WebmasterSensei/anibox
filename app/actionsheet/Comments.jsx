@@ -22,6 +22,8 @@ import Feather from "@expo/vector-icons/Feather";
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const CommentSection = ({ loadingI }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -60,10 +62,16 @@ const CommentSection = ({ loadingI }) => {
   return (
     <View style={styles.container}>
       <View style={styles.footer}>
-        <FontAwesome6 name="share-from-square" size={20} color="black" />
+        <View>
+          <FontAwesome5 name="bookmark" size={20} color="black" />
+        </View>
         <View style={styles.icons}>
           <Text style={styles.likes}>
-            <AntDesign name="hearto" size={20} color="black" />
+            <MaterialCommunityIcons
+              name="heart-outline"
+              size={24}
+              color="black"
+            />
           </Text>
           <TouchableOpacity onPress={toggleCommentSection}>
             <FontAwesome5 name="comment" size={20} color="black" />
@@ -84,13 +92,15 @@ const CommentSection = ({ loadingI }) => {
           style={styles.commentContainer}
         >
           <View style={styles.commentHeader}>
-            <Text style={styles.commentHeaderText}>Comments</Text>
-
             <TouchableOpacity onPress={toggleCommentSection}>
               <Text style={styles.closeButton}>
-                <AntDesign name="close" size={24} color="#576F72" />
+                <MaterialIcons name="arrow-back-ios" size={20} color="black" />
               </Text>
             </TouchableOpacity>
+            <Text style={styles.commentHeaderText}>Comments</Text>
+            <Text style={styles.commentHeaderText}>
+              <Entypo name="dots-three-horizontal" size={20} color="black" />
+            </Text>
           </View>
 
           {/* Comment Input */}
@@ -127,22 +137,15 @@ const CommentSection = ({ loadingI }) => {
                   <View style={styles.footer}>
                     <View style={styles.icon2}>
                       <TouchableOpacity>
-                        {/* <Feather
-                            name="message-circle"
-                            size={18}
-                            color="black"
-                          /> */}
-                        <Text style={{ fontSize: 13 }}>Reply</Text>
+                        <Text style={{ fontSize: 13, fontWeight: 'bold' }}>Reply</Text>
                       </TouchableOpacity>
                       <Text style={styles.likes}>
-                        <AntDesign name="like2" size={18} color="black" />
+                        <MaterialCommunityIcons
+                          name="heart-outline"
+                          size={22}
+                          color="black"
+                        />
                       </Text>
-
-                      <Entypo
-                        name="dots-three-horizontal"
-                        size={15}
-                        color="black"
-                      />
                     </View>
                   </View>
                 </View>
@@ -194,6 +197,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // width: ,
+    marginTop: 20,
     marginHorizontal: wp(1),
   },
   button: {
@@ -247,14 +251,12 @@ const styles = StyleSheet.create({
   },
 
   footer: {
-    flex: 1,
-    alignItems: "flex-center",
+    flexDirection: "row",
     justifyContent: "space-between",
-    marginHorizontal: wp(4),
+    marginHorizontal: wp(2),
   },
   icons: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     gap: 18,
     marginBottom: 5,
@@ -262,9 +264,7 @@ const styles = StyleSheet.create({
   icon2: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    gap: 13,
-    marginBottom: 5,
+    width: "100%",
   },
 
   commentsList: {
@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
     // marginHorizontal: wp(3),
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 10,
+    marginTop: 20,
     // padding: 5,
   },
   userInfo: {

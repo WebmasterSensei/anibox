@@ -6,6 +6,7 @@ import {
   Pressable,
   FlatList,
   RefreshControl,
+  InteractionManager,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import ScreenWrapper from "../../components/ScreenWrapper";
@@ -15,8 +16,7 @@ import Icon from "../../assets/icons";
 import PostCard from "../../components/PostCard";
 import axios from "react-native-axios/lib/axios";
 import { useRouter } from "expo-router";
-import AntDesign from '@expo/vector-icons/AntDesign';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Loading from "../../components/LoadingScreen";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -49,10 +49,10 @@ const Dashboard = () => {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await fetchPosts(); 
+    await fetchPosts();
     setRefreshing(false);
   };
-
+  
   return (
     <ScreenWrapper bg="white">
       <View style={styles.container}>
@@ -73,26 +73,28 @@ const Dashboard = () => {
             </Pressable>
           </View>
         </View>
-
+        {loading}
         <View style={styles.listStyle}>
-          <FlatList
-            showsVerticalScrollIndicator={false} // Hides vertical scrollbar
-            showsHorizontalScrollIndicator={false} // Hides horizontal scrollbar
-            data={post} // Pass the data array
-            keyExtractor={(item) => item.id} // Unique key for each item
-            renderItem={({ item }) => (
-              <PostCard loadingI={loading} item={item} />
-            )} // Render each item
-            contentContainerStyle={styles.flatListContent} // Optional styling for the list container
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing} // Controlled by the `refreshing` state
-                onRefresh={onRefresh} // Function to call when refreshing
-                colors={["#FF0000", "#00FF00", "#0000FF"]} // Customize the loading spinner colors (Android only)
-                tintColor="#FF0000" // Customize the loading spinner color (iOS only)
-              />
-            }
-          />
+          {!loading ? (
+            <FlatList
+              showsVerticalScrollIndicator={false} // Hides vertical scrollbar
+              showsHorizontalScrollIndicator={false} // Hides horizontal scrollbar
+              data={post} // Pass the data array
+              keyExtractor={(item) => item.id} // Unique key for each item
+              renderItem={({ item }) => <PostCard item={item} />} // Render each item
+              contentContainerStyle={styles.flatListContent} // Optional styling for the list container
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing} // Controlled by the `refreshing` state
+                  onRefresh={onRefresh} // Function to call when refreshing
+                  colors={["#FF0000", "#00FF00", "#0000FF"]} // Customize the loading spinner colors (Android only)
+                  tintColor="#FF0000" // Customize the loading spinner color (iOS only)
+                />
+              }
+            />
+          ) : (
+            <Loading />
+          )}
         </View>
       </View>
     </ScreenWrapper>
@@ -109,8 +111,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: wp(5),
-    marginBottom: 1,
+    marginHorizontal: wp(4),
+    marginBottom: -10,
   },
   flatListContent: {
     paddingBottom: 20, // Add padding at the bottom if needed
@@ -124,7 +126,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    gap: 20,
+    gap: 15,
   },
   listStyle: {
     paddingTop: 20,

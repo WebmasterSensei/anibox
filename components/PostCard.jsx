@@ -33,62 +33,38 @@ const PostCard = ({
     elevation: 1,
   };
 
-  const colorMode = "light";
+  // const colorMode = "light";
 
   return (
     <View style={[styles.container, hasShadow && shadowStyle]}>
       <View style={styles.header}>
         <View style={styles.userInfo}>
-          <Skeleton
-            height={35}
-            width={35}
-            radius={"round"}
-            colorMode={colorMode}
-          >
-            {loadingI ? null : (
-              <Avatar
-                size={hp(4.5)}
-                src={require("../assets/images/cute.png")}
-                rounded={theme.borderRadius.large}
-              />
-            )}
-          </Skeleton>
+          <Avatar
+            size={hp(4.5)}
+            src={require("../assets/images/cute.png")}
+            rounded={theme.borderRadius.large}
+          />
           <View style={{ gap: 5 }}>
-            <Skeleton colorMode={colorMode} height={17} width={"85%"}>
-              {loadingI ? null : <Text style={styles.name}>{item.title} </Text>}
-            </Skeleton>
-            <Skeleton colorMode={colorMode} height={13} width={"50%"}>
-              {loadingI ? null : (
-                <Text style={styles.date}>{item.date_posted}</Text>
-              )}
-            </Skeleton>
+            <Text style={styles.name}>{item.title} </Text>
+
+            <Text style={styles.date}>{item.date_posted}</Text>
           </View>
         </View>
         <Pressable>
-          <Skeleton width={"25%"} height={12} colorMode={colorMode}>
-            {loadingI ? null : (
-              <Icon name="threedots" color="black" strokeWidth={1} />
-            )}
-          </Skeleton>
+          <Icon name="threedots" color="black" strokeWidth={1} />
         </Pressable>
       </View>
       <View style={styles.imageContainer}>
-        <Skeleton colorMode={colorMode} width={"100%"} height={200}>
-          {loadingI ? null : (
-            <Image
-              style={styles.image}
-              source={require("../assets/images/sungjinwoo.jpg")}
-            />
-          )}
-        </Skeleton>
+        <Image
+          style={styles.image}
+          source={require("../assets/images/sungjinwoo.jpg")}
+        />
       </View>
       <View style={styles.description}>
-        <Skeleton colorMode={colorMode} height={17} width={"100%"}>
-          {loadingI ? null : <Text>"{item.desc}"</Text>}
-        </Skeleton>
+        <Text>"{item.desc}"</Text>
       </View>
 
-      <CommentSection/>
+      <CommentSection />
     </View>
   );
 };
